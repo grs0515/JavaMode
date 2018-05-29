@@ -1,0 +1,2 @@
+# JavaMode
+init 
