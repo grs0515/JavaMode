@@ -18,7 +18,9 @@ public class Singleton {
 	 * 持有私有静态实例,防止被引用,此处赋值为
 	 * 
 	 * 私有构造方法,防止被实例化
-	 */ private Singleton() {
+	 */
+	private Singleton() {
+		System.out.println("-----Singleton 构造方法-----");
 	}
 
 	/**
