@@ -4,9 +4,14 @@ import com.grs.java.mode.adapter.Source;
 import com.grs.java.mode.adapter.SourceAdapter;
 import com.grs.java.mode.adapter.SourceSubAdapter;
 import com.grs.java.mode.adapter.WrapperAdapter;
+import com.grs.java.mode.bridge.Bridge;
+import com.grs.java.mode.bridge.MyBridge;
+import com.grs.java.mode.bridge.SourceSub1;
+import com.grs.java.mode.bridge.SourceSub2;
 import com.grs.java.mode.builder.Builder;
 import com.grs.java.mode.decorator.Decorator;
 import com.grs.java.mode.decorator.Sourceable;
+import com.grs.java.mode.facade.Computer;
 import com.grs.java.mode.factory.abstracts.BigFactory;
 import com.grs.java.mode.factory.abstracts.Boy;
 import com.grs.java.mode.factory.abstracts.Girl;
@@ -14,7 +19,10 @@ import com.grs.java.mode.factory.abstracts.PersonFactory;
 import com.grs.java.mode.factory.abstracts.SmallFactory;
 import com.grs.java.mode.factory.simple.SendFactory;
 import com.grs.java.mode.factory.simple.Sender;
+import com.grs.java.mode.proxy.Proxy;
 import com.grs.java.mode.singleton.Singleton;
+import com.grs.java.mode.strategy.Strategy;
+import com.grs.java.mode.template.Template;
 
 /**
  * 类说明:
@@ -41,6 +49,74 @@ public class Test {
 
 		print("装饰模式");
 		decoratorTest();
+
+		print("代理模式");
+		proxyTest();
+
+		print("外观模式");
+		facadeTest();
+
+		print("桥接模式");
+		bridgeTest();
+
+		print("策略模式");
+		strategyTest();
+
+		print("模板方法模式");
+		templateTest();
+	}
+
+	private static void templateTest() {
+		Template template = new Template();
+		template.method();
+	}
+
+	/**
+	 * 策略模式的决定权在用户,系统本身提供不同算法的实现,新增或者删除算法,对各种算法做封装。因此,策略模式
+	 * 多用在算法决策系统中,外部用户只需要决定用哪个算法即可。
+	 */
+	private static void strategyTest() {
+		Strategy strategy = new Strategy();
+		strategy.method();
+	}
+
+	/**
+	 * 这样,就通过对 Bridge 类的调用,实现了对接口 Sourceable 的实现类 SourceSub1 和 SourceSub2 的调用。接
+	 * 下来我再画个图,大家就应该明白了,因为这个图是我们
+	 */
+	private static void bridgeTest() {
+		Bridge myBridge = new MyBridge();
+
+		com.grs.java.mode.bridge.Sourceable sourceSub1 = new SourceSub1();
+		myBridge.setSource(sourceSub1);
+		myBridge.method();
+
+		com.grs.java.mode.bridge.Sourceable sourceSub2 = new SourceSub2();
+		myBridge.setSource(sourceSub2);
+		myBridge.method();
+
+	}
+
+	/**
+	 * 如果我们没有 Computer 类,那么, CPU 、 Memory 、 Disk 他们之间将会相互持有实例,产生关系,这样会造成严
+	 * 重的依赖,修改一个类,可能会带来其他类的修改,这不是我们想要看到的,有了 Computer 类,他们之间的关系被 放在了 Computer
+	 * 类里,这样就起到了解耦的作用,这,就是外观模式!
+	 */
+	private static void facadeTest() {
+		Computer computer = new Computer();
+		computer.startUp();
+		computer.shutDown();
+	}
+
+	/**
+	 * 代理模式的应用场景:
+	 * 
+	 * 如果已有的方法在使用的时候需要对原有的方法进行改进,此时有两种办法: 1 、修改原有的方法来适应。这样违反了 “对扩展开放,对修改关闭 ”的原则。
+	 * 2 、就是采用一个代理类调用原有的方法,且对产生的结果进行控制。这种方法就是代理模式。 使用代理模式,可以将功能划分的更加清晰,有助于后期维护!
+	 */
+	private static void proxyTest() {
+		com.grs.java.mode.proxy.Sourceable proxy = new Proxy();
+		proxy.method();
 	}
 
 	/**
